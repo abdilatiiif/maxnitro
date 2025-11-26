@@ -2,11 +2,11 @@
 
 ## mobile nav
 
-- menu
+- link må fikses etter klikk
 
 ## Footer
 
 - back to the topp
 - legge inn riktig links til sidene
 
-##
+## kjoretoy-oversikt

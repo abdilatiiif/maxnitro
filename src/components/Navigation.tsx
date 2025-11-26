@@ -18,6 +18,7 @@ import { NavigationDesktop } from "./NavigationDesktop";
 import { AvatarProfile } from "./AvatarProfile";
 import { DarkMode } from "./DarkMode";
 import { MobileNavLinks } from "./MobileNavLinks";
+import { Input } from "./ui/input";
 
 export function Navigation() {
   return (
@@ -25,9 +26,9 @@ export function Navigation() {
       <Image
         src={logoSvg}
         alt="logo"
-        className=" overflow-auto w-[150px] h-[150px] lg:w-[150px] lg:h-[150px]"
-        width={600}
-        height={600}
+        className="w-auto object-contain rounded-3xl"
+        width={150}
+        height={64}
       />
 
       {/** desktop  */}
@@ -45,20 +46,16 @@ export function Navigation() {
         </SheetTrigger>
         <SheetContent>
           <SheetHeader>
-            <SheetTitle>
-              <Image
-                src={logoSvg}
-                alt="logo"
-                className=" top-1 left-1 rounded-full"
-                width={60}
-                height={60}
-              />
-            </SheetTitle>
+            <SheetTitle></SheetTitle>
             <SheetDescription></SheetDescription>
           </SheetHeader>
 
-          <nav className="flex items-center justify-center flex-col">
+          <nav className="flex items-center justify-center flex-col p-2">
             <MobileNavLinks />
+            <Input
+              placeholder="Søk etter kjøretøy..."
+              className="rounded-lg  p-4"
+            />
           </nav>
           <SheetFooter>
             <DarkMode />
