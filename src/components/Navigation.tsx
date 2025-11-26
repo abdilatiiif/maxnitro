@@ -17,6 +17,8 @@ import logoSvg from "@/assets/logo.png";
 import { NavigationDesktop } from "./NavigationDesktop";
 
 import { AvatarProfile } from "./AvatarProfile";
+import { DarkMode } from "./DarkMode";
+import { MobileNavLinks } from "./MobileNavLinks";
 
 export function Navigation() {
   return (
@@ -24,14 +26,19 @@ export function Navigation() {
       <Image
         src={logoSvg}
         alt="logo"
-        className="rounded-full p-2 w-[100px] h-[100px]"
+        className="rounded-full p-2 w-[100px] h-[100px] lg:w-[150px] lg:h-[150px]"
         width={600}
         height={600}
       />
 
       {/** desktop  */}
+
       <NavigationDesktop />
-      <AvatarProfile />
+
+      <div className=" hidden md:flex items-center">
+        <DarkMode />
+        <AvatarProfile />
+      </div>
 
       <Sheet>
         <SheetTrigger asChild className="md:hidden fixed right-4 top-10 z-50 ">
@@ -52,35 +59,17 @@ export function Navigation() {
           </SheetHeader>
 
           <nav className="flex items-center justify-center flex-col">
-            <Link
-              href="/"
-              className="hover:text-green-200 transition font-medium py-2 flex items-center gap-2"
-            >
-              Hjem
-            </Link>
-            <Link
-              href="/tiltak"
-              className="hover:text-green-200 transition font-medium py-2 flex items-center gap-2"
-            >
-              Tiltak
-            </Link>
-            <Link
-              href="/verstinger"
-              className="hover:text-red-500 transition font-medium py-2 flex items-center gap-2"
-            >
-              Verstinger
-            </Link>
-            <Link
-              href="/klimacalc"
-              className="hover:text-green-200 transition font-medium py-2 flex items-center gap-2"
-            >
-              Klimakalkulator
-            </Link>
+            <MobileNavLinks />
           </nav>
           <SheetFooter>
+            <DarkMode />
             <SheetClose asChild>
               <Button variant="outline">Close</Button>
             </SheetClose>
+
+            <p className="text-sm text-center text-muted-foreground mt-4">
+              © 2025 MaxNitro. All rights reserved. Latif Hassan
+            </p>
           </SheetFooter>
         </SheetContent>
       </Sheet>

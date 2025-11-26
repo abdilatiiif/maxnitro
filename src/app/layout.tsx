@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Navigation } from "../components/Navigation";
+import { ThemeProvider } from "../components/theme-provider";
 
 import { Mona_Sans } from "next/font/google";
 
@@ -20,10 +21,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={monaSans.className}>
+    <html
+      lang="en"
+      className={`${monaSans.className}`}
+      suppressHydrationWarning
+    >
       <body className="">
-        <Navigation />
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navigation />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
