@@ -222,7 +222,10 @@ export function NavigationDesktop() {
           </NavigationMenuContent>
         </NavigationMenuItem>
       </NavigationMenuList>
-      <Input placeholder="Søk etter kjøretøy..." className="ml-4 bl-2 p-2" />
+      <Input
+        placeholder="Søk etter kjøretøy..."
+        className="ml-4 bl-2 p-2 bl-2 rounded-lg bg-green-50 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
+      />
     </NavigationMenu>
   );
 }

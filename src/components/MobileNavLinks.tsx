@@ -10,7 +10,7 @@ export function MobileNavLinks() {
     <Accordion
       type="single"
       collapsible
-      className="w-full px-4"
+      className="w-full px-4 "
       defaultValue="item-1"
     >
       <AccordionItem value="item-1">
