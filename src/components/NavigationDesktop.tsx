@@ -16,7 +16,7 @@ import { Car, Flame, Plane, Sailboat } from "lucide-react";
 
 export function NavigationDesktop() {
   return (
-    <NavigationMenu className="border-2 pl-2 rounded-2xl hidden max-w-1/2 md:flex z-50">
+    <NavigationMenu className=" pl-2 rounded-2xl hidden max-w-1/2 md:flex z-50">
       <NavigationMenuList className="">
         <NavigationMenuItem className=" md:block">
           <NavigationMenuTrigger>Kjøp</NavigationMenuTrigger>
@@ -224,7 +224,7 @@ export function NavigationDesktop() {
       </NavigationMenuList>
       <Input
         placeholder="Søk etter kjøretøy..."
-        className="ml-4 bl-2 p-2 bl-2 rounded-lg bg-green-50 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
+        className="ml-4 bl-2 p-2 bl-2 rounded-lg bg-green-50 min-w-[140px] shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
       />
     </NavigationMenu>
   );

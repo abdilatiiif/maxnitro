@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 
-import Link from "next/link";
 import {
   Sheet,
   SheetClose,
@@ -22,11 +21,11 @@ import { MobileNavLinks } from "./MobileNavLinks";
 
 export function Navigation() {
   return (
-    <div className="flex flex-row items-center justify-between">
+    <div className="flex flex-row items-center justify-between h-20">
       <Image
         src={logoSvg}
         alt="logo"
-        className="rounded-full p-2 w-[100px] h-[100px] lg:w-[150px] lg:h-[150px]"
+        className=" overflow-auto w-[150px] h-[150px] lg:w-[150px] lg:h-[150px]"
         width={600}
         height={600}
       />
@@ -35,14 +34,14 @@ export function Navigation() {
 
       <NavigationDesktop />
 
-      <div className=" hidden md:flex items-center">
+      <div className=" hidden md:flex items-center gap-2 pr-4">
         <DarkMode />
-        <AvatarProfile />
+        <Button>Login</Button>
       </div>
 
       <Sheet>
-        <SheetTrigger asChild className="md:hidden fixed right-4 top-10 z-50 ">
-          <Menu />
+        <SheetTrigger asChild className="md:hidden fixed right-5 top-5 z-50 ">
+          <Menu size={40} />
         </SheetTrigger>
         <SheetContent>
           <SheetHeader>

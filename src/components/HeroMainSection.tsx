@@ -9,7 +9,7 @@ function HeroMainSection() {
           <h1 className="block text-7xl font-bold lg:w-[full] text-center z-10 ">
             Kjør hvor du vil
           </h1>
-          <p className="p-4 text-2xl md:text-4xl">
+          <p className="p-4 text-xl md:text-3xl">
             Opplev friheten med våre luksuriøse kjøretøy til leie. Enten du
             ønsker å cruise langs kysten, utforske fjellene eller sveve over
             landskapet, har vi det perfekte kjøretøyet for deg. Velg blant vårt

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navigation } from "../components/Navigation";
 import { ThemeProvider } from "../components/theme-provider";
-
+import Footer from "@/components/Footer";
 import { Mona_Sans } from "next/font/google";
 
 const monaSans = Mona_Sans({
@@ -35,6 +35,7 @@ export default function RootLayout({
         >
           <Navigation />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

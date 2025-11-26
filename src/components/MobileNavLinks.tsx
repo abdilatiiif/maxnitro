@@ -1,9 +1,101 @@
+"use client";
+
+import "animate.css";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
+import * as React from "react";
+import { ArrowDownRight } from "lucide-react";
+
+import Link from "next/link";
+
+const samlinglinks = [
+  {
+    value: "/kjoretoy-oversikt",
+    label: "Kjøretøy Oversikt",
+  },
+  {
+    value: "/bil",
+    label: "Biler",
+  },
+  {
+    value: "/baat",
+    label: "Båter",
+  },
+  {
+    value: "/fly",
+    label: "Fly",
+  },
+  {
+    value: "/motorsykkel",
+    label: "Motorsykler",
+  },
+  {
+    value: "/jetski",
+    label: "Jetski",
+  },
+];
+const kjøplinks = [
+  {
+    value: "/oversikt",
+    label: "Kjøp Oversikt",
+  },
+  {
+    value: "/bestill-provetime",
+    label: "Bestill Prøvetime",
+  },
+  {
+    value: "/bygg-din-egen",
+    label: "Bygg Din Egen",
+  },
+  {
+    value: "/finansiering-forsikring",
+    label: "Finansiering & Forsikring",
+  },
+];
+
+const leielinks = [
+  {
+    value: "/leie-oversikt",
+    label: "Leie Oversikt",
+  },
+  {
+    value: "/langtidsleie",
+    label: "Langtidsleie",
+  },
+  {
+    value: "/selskapsleie",
+    label: "Selskapsleie",
+  },
+  {
+    value: "/spesialtilbud",
+    label: "Spesialtilbud",
+  },
+];
+
+const merlinks = [
+  {
+    value: "/kundestotte",
+    label: "Kundestøtte",
+  },
+  {
+    value: "/om-oss",
+    label: "Om Oss",
+  },
+  {
+    value: "/blogg",
+    label: "Blogg",
+  },
+  {
+    value: "/kontakt-oss",
+    label: "Kontakt Oss",
+  },
+];
 
 export function MobileNavLinks() {
   return (
@@ -15,60 +107,66 @@ export function MobileNavLinks() {
     >
       <AccordionItem value="item-1">
         <AccordionTrigger>Samling</AccordionTrigger>
-        <AccordionContent className="flex flex-col gap-4 text-balance">
-          <p>
-            Our flagship product combines cutting-edge technology with sleek
-            design. Built with premium materials, it offers unparalleled
-            performance and reliability.
-          </p>
-          <p>
-            Key features include advanced processing capabilities, and an
-            intuitive user interface designed for both beginners and experts.
-          </p>
+        <AccordionContent className="flex items-center w-full flex-col gap-4 text-balance">
+          {samlinglinks.map((link) => (
+            <Link
+              key={link.value}
+              href={link.value}
+              className="flex slide-in-right items-center w-full border-2 rounded-lg p-2 bg-teal-600 transition-all"
+            >
+              {link.label}
+
+              <ArrowDownRight className="ml-2 h-4 w-4" />
+            </Link>
+          ))}
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
         <AccordionTrigger>Kjøp</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 text-balance">
-          <p>
-            We offer worldwide shipping through trusted courier partners.
-            Standard delivery takes 3-5 business days, while express shipping
-            ensures delivery within 1-2 business days.
-          </p>
-          <p>
-            All orders are carefully packaged and fully insured. Track your
-            shipment in real-time through our dedicated tracking portal.
-          </p>
+          {kjøplinks.map((link) => (
+            <Link
+              key={link.value}
+              href={link.value}
+              className="flex slide-in-right items-center w-full border-2 rounded-lg p-2 bg-teal-600 transition-all"
+            >
+              {link.label}
+
+              <ArrowDownRight className="ml-2 h-4 w-4" />
+            </Link>
+          ))}
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-3">
         <AccordionTrigger>Leie</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 text-balance">
-          <p>
-            We stand behind our products with a comprehensive 30-day return
-            policy. If you&apos;re not completely satisfied, simply return the
-            item in its original condition.
-          </p>
-          <p>
-            Our hassle-free return process includes free return shipping and
-            full refunds processed within 48 hours of receiving the returned
-            item.
-          </p>
+          {leielinks.map((link) => (
+            <Link
+              key={link.value}
+              href={link.value}
+              className="flex slide-in-right items-center w-full border-2 rounded-lg p-2 bg-teal-600 transition-all"
+            >
+              {link.label}
+
+              <ArrowDownRight className="ml-2 h-4 w-4" />
+            </Link>
+          ))}
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-4">
         <AccordionTrigger>Mer</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 text-balance">
-          <p>
-            We stand behind our products with a comprehensive 30-day return
-            policy. If you&apos;re not completely satisfied, simply return the
-            item in its original condition.
-          </p>
-          <p>
-            Our hassle-free return process includes free return shipping and
-            full refunds processed within 48 hours of receiving the returned
-            item.
-          </p>
+          {merlinks.map((link) => (
+            <Link
+              key={link.value}
+              href={link.value}
+              className="flex slide-in-right items-center w-full border-2 rounded-lg p-2 bg-teal-600 transition-all"
+            >
+              {link.label}
+
+              <ArrowDownRight className="ml-2 h-4 w-4" />
+            </Link>
+          ))}
         </AccordionContent>
       </AccordionItem>
     </Accordion>
