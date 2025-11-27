@@ -1,9 +1,36 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
 function HeroMainSection() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const isDark = resolvedTheme === "dark";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <section id="main-hero" className="relative  flex items-center pt-20">
-      <div className="absolute inset-0 bg-gradient-to-b from-luxury-darker via-background to-background" />
+    <section id="main-hero" className="relative flex items-center pt-20">
+      {mounted && isDark && (
+        <>
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover z-0"
+          >
+            <source src="/video-kjøretøy_medium.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-transparent z-[1]" />
+        </>
+      )}
+
       <div className="container mx-auto px-6 relative z-10">
         <div className=" ">
           <h1 className="block text-7xl font-bold lg:w-[full] text-center z-10 ">
@@ -22,11 +49,13 @@ function HeroMainSection() {
           {/* Bil - Bilde venstre */}
           <div className="flex flex-col md:flex-row gap-6 p-6 border-2 rounded-2xl hover:shadow-2xl transition-all bg-card hover:border-primary group">
             <Image
-              src={"/hero-car.jpg"}
+              src="/hero-car.jpg"
               alt="Luksuriøse Biler"
               className="md:w-1/2 h-64 md:h-80 object-cover rounded-xl group-hover:scale-105 transition-transform"
               width={800}
               height={400}
+              loading="eager"
+              priority
             />
             <div className="md:w-1/2 flex flex-col justify-center gap-4">
               <h3 className="text-3xl font-bold">Luksusbiler</h3>
@@ -128,7 +157,7 @@ function HeroMainSection() {
           </div>
 
           {/* Sportsbil - Bilde høyre */}
-          <div className="flex flex-col md:flex-row-reverse gap-6 p-6 border-2 rounded-2xl hover:shadow-2xl transition-all bg-card hover:border-primary group">
+          <div className="flex relative flex-col md:flex-row-reverse gap-6 p-6 border-2 rounded-2xl hover:shadow-2xl transition-all bg-card hover:border-primary group">
             <Image
               src={"/hero-car.jpg"}
               alt="Sportsbil"
