@@ -1,3 +1,4 @@
+import KjøreTøyListe from "@/components/KjøreTøyListe";
 import { MobileFilter } from "@/components/MobileFilter";
 import SideBarBox from "@/components/SideBarBox";
 
@@ -10,6 +11,7 @@ function KjøretøyOversikt() {
         <h1 className="text-2xl font-bold text-center mb-6">
           KJØRETØY OVERSIKT
         </h1>
+        <KjøreTøyListe />
       </div>
 
       <SidebarProvider>

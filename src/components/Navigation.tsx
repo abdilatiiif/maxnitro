@@ -26,7 +26,7 @@ export function Navigation() {
 
       <NavigationDesktop />
 
-      <div className="z-10  ml-4 md:hidden">
+      <div className="z-10 fixed ml-4 md:hidden">
         <Link href="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
