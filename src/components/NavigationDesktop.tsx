@@ -37,8 +37,10 @@ export function NavigationDesktop() {
             <ul className="grid w-[300px] gap-4">
               <li>
                 <NavigationMenuLink asChild>
-                  <Link href="#">
-                    <div className="font-medium">Kjøp Oversikt</div>
+                  <Link href="/kjop-oversikt">
+                    <div className="font-medium text-red-500">
+                      Kjøp Oversikt
+                    </div>
                     <div className="text-muted-foreground">
                       Utforsk vårt omfattende utvalg av kjøretøy tilgjengelig
                       for kjøp på land, vann og luft.
@@ -82,8 +84,10 @@ export function NavigationDesktop() {
             <ul className="grid w-[300px] gap-4">
               <li>
                 <NavigationMenuLink asChild>
-                  <Link href="#">
-                    <div className="font-medium">Alle Kjøretøy</div>
+                  <Link href="/kjoretoy-oversikt">
+                    <div className="font-medium text-green-500">
+                      Alle Kjøretøy
+                    </div>
                     <div className="text-muted-foreground">
                       Alle kjøretøy samlet på ett sted – utforsk vårt brede
                       utvalg av land-, vann- og luftkjøretøy.
