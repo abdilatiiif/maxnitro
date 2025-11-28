@@ -1,4 +1,4 @@
-// hva som skal jobbes med:
+// hva som skal jobbes med: LOGG
 
 ## mobile nav
 
@@ -11,10 +11,16 @@
 
 ## kjoretoy-oversikt
 
-- video bakggrunn
+- video bakggrunn - ferdig
 - filter venstre med søkefelt på toppen
-- biler cards vises
-- må lage get action calls
-- hente bil API fra nettet ? eller laget eget API
-- supabase?
--
+- biler cards vises - ferdig
+- må lage get action calls - ferdig
+- hente bil API fra nettet ? eller laget eget API - ferdig, -> supabase
+- Legge til fly, båt, jetski, motorsykkel resterende inn på supabase
+- vise kjøretøyene på siden
+- egen action server for disse getCalls
+- håndere filter systemet
+
+############################################################
+
+28.nov : installert supabase, lagret som eget API på siden. Viser nå biler på siden med get actionsever. laget også egen .env.local fil for key & URL
