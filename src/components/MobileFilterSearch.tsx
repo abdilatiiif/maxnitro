@@ -11,12 +11,8 @@ import {
 
 export default function MobileFilterSearch() {
   return (
-    <Card className="w-full max-w-4xl mx-auto shadow-lg">
+    <Card className="w-full max-w-4xl mx-auto shadow-lg overflow-y-auto">
       <CardContent className="p-6">
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold">Til ditt perfekte kjøretøy</h1>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
           {/* Car Brand */}
           <div className="space-y-2">

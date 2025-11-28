@@ -9,7 +9,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <h3 className="text-xl font-bold">MaxNitro</h3>
+              <h3 className="text-xl text-red-500 font-bold">MaxNitro</h3>
             </div>
             <p className="">
               MaxNitro er din ultimate destinasjon for luksuriøse kjøretøy til

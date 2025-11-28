@@ -1,5 +1,21 @@
 import { CarCard } from "./CarCard";
 
+interface Car {
+  id: number;
+  brand: string;
+  model: string;
+  year: number;
+  variant: string;
+  seller: string;
+  sellerType: string;
+  price: number;
+  imageUrl: string;
+  status: string;
+  statusColor: string;
+  bgColor: string;
+}
+
+/*
 const cars = [
   {
     brand: "Porsche",
@@ -28,7 +44,7 @@ const cars = [
     bgColor: "bg-gray-50",
   },
   {
-    brand: "Chevrolet",
+function KjøreTøyListe({ cars }: { cars: Car[] }) {
     model: "C8",
     year: 2023,
     variant: "Corvette Stingray",
@@ -41,14 +57,23 @@ const cars = [
     bgColor: "bg-pink-50",
   },
 ];
-function KjøreTøyListe() {
+*/
+
+function KjøreTøyListe({ cars }: { cars: Car[] }) {
   return (
     <div className="">
       <div className="min-h-screen  p-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {cars.map((car, index) => (
-              <CarCard key={index} {...car} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
+            {cars.map((car) => (
+              <CarCard
+                key={car.id}
+                merke={car.brand}
+                år={car.year}
+                type={car.variant}
+                pris={car.price}
+                {...car}
+              />
             ))}
           </div>
         </div>

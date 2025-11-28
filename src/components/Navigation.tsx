@@ -21,12 +21,12 @@ import { Input } from "./ui/input";
 
 export function Navigation() {
   return (
-    <div className="flex flex-row items-center justify-between h-20">
+    <div className="flex flex-row items-center justify-between h-20 ">
       {/** desktop  */}
 
       <NavigationDesktop />
 
-      <div className="z-10 fixed ml-4 md:hidden">
+      <div className="z-50 fixed ml-4 md:hidden">
         <Link href="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +49,7 @@ export function Navigation() {
         <SheetTrigger asChild className="md:hidden fixed right-5 top-5 z-50 ">
           <Menu size={40} />
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent className="overflow-y-auto">
           <SheetHeader>
             <SheetTitle></SheetTitle>
             <SheetDescription></SheetDescription>

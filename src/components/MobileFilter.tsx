@@ -8,7 +8,6 @@ import {
   DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -17,7 +16,7 @@ import MobileFilterSearch from "./MobileFilterSearch";
 
 export function MobileFilter() {
   return (
-    <div className="flex items-center justify-center border-none md:hidden">
+    <div className="absolute w-full flex items-center justify-center z-50 border-none md:hidden">
       <Drawer>
         <DrawerTrigger asChild>
           <Button

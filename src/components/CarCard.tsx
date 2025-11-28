@@ -1,76 +1,62 @@
-import React from "react";
 import { Car, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
 interface CarCardProps {
-  brand: string;
+  merke: string;
   model: string;
-  year: number;
-  variant: string;
-  imageUrl?: string;
-  seller: string;
-  sellerType: string;
-  price: number;
-  status?: string;
-  statusColor?: string;
-  bgColor?: string;
+  år: number;
+  type: string;
+  bilde?: string;
+  pris: number;
+  farge?: string;
 }
 
-export function CarCard({
-  brand,
-  model,
-  year,
-  variant,
-  imageUrl,
-  seller,
-  sellerType,
-  price,
-  status,
-  statusColor,
-  bgColor = "bg-blue-100",
-}: CarCardProps) {
+export function CarCard(car: CarCardProps) {
   return (
-    <div className="rounded-2xl border-2 overflow-hidden shadow-lg">
+    <div className="rounded-2xl border-2 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-card hover:border-primary group">
       {/* Header */}
       <div className="p-4 flex justify-between items-start">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-lg flex items-center justify-center">
-            <Car className="w-6 h-6 " />
+          <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+            <Car className="w-6 h-6 text-primary" />
           </div>
           <div>
-            <h3 className="font-bold text-md md:text-xl ">
-              {brand} {model}
+            <h3 className="font-bold text-lg md:text-xl">
+              {car.merke} {car.model}
             </h3>
-            <p className=" text-sm">
-              {variant} - {year}
+            <p className="text-muted-foreground text-sm">
+              {car.type} - {car.år}
             </p>
           </div>
         </div>
-        {status && (
+        {car.farge && (
           <span
-            className={`px-3 py-1 rounded-full text-sm font-medium ${statusColor}`}
+            className={`px-3 py-1 rounded-full text-sm font-medium ${car.farge}`}
           >
-            {status}
+            {car.farge}
           </span>
         )}
       </div>
 
       {/* Image */}
       <div className="px-4 pb-4">
-        <div className=" rounded-xl p-6 flex items-center justify-center h-48">
-          {imageUrl ? (
-            <Link href={`/cars/${"7"}`} className="...">
+        <div className="bg-muted/30 rounded-xl p-6 flex items-center justify-center h-48 overflow-hidden">
+          {car.bilde ? (
+            <Link
+              href={`/cars/${"7"}`}
+              className="relative w-full h-full flex items-center justify-center"
+            >
               <Image
-                src={imageUrl}
-                alt={`${brand} ${model}`}
+                src={car.bilde}
+                alt={`${car.merke} ${car.model}`}
                 width={400}
                 height={300}
-                className="..."
+                className="rounded-xl object-contain group-hover:scale-105 transition-transform duration-300"
               />
             </Link>
           ) : (
-            <Car className="w-32 h-32 " />
+            <Car className="w-32 h-32 text-muted-foreground/50" />
           )}
         </div>
       </div>
@@ -78,24 +64,15 @@ export function CarCard({
       {/* Footer */}
       <div className="px-4 pb-4 flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-            <span className="text-xs font-bold ">
-              {seller
-                .split(" ")
-                .map((n) => n[0])
-                .join("")}
-            </span>
+          <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
+            <CheckCircle className="w-4 h-4 text-primary" />
           </div>
           <div>
-            <p className="font-semibold  text-sm">{seller}</p>
-            <div className="flex items-center gap-1">
-              <CheckCircle className="w-3 h-3 text-blue-500" />
-              <span className="text-xs ">{sellerType}</span>
-            </div>
+            <p className="text-xs text-muted-foreground">Verifisert</p>
           </div>
         </div>
         <div className="text-right">
-          <p className="text-2xl font-bold">${price}</p>
+          <p className="text-2xl font-bold text-primary">{car.pris} kr</p>
         </div>
       </div>
     </div>
