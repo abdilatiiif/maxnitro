@@ -15,9 +15,9 @@ import {
 
 import { NavigationDesktop } from "./NavigationDesktop";
 
-import { DarkMode } from "./DarkMode";
+import { DarkMode } from "../DarkMode";
 import { MobileNavLinks } from "./MobileNavLinks";
-import { Input } from "./ui/input";
+import { Input } from "../ui/input";
 
 export function Navigation() {
   return (

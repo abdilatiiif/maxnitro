@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import "@/app/hero.css";
 import { useEffect, useState } from "react";
 

@@ -20,6 +20,7 @@
 - vise kjøretøyene på siden
 - egen action server for disse getCalls
 - håndere filter systemet
+- rydde opp i compoents mappen
 
 ############################################################
 

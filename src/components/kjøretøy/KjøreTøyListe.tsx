@@ -1,6 +1,7 @@
-import { CarCard } from "./CarCard";
+import { KjøretøyCard } from "./KjøretøyCard";
 
-interface Car {
+interface vicle {
+  kategori: string;
   id: number;
   brand: string;
   model: string;
@@ -59,20 +60,20 @@ function KjøreTøyListe({ cars }: { cars: Car[] }) {
 ];
 */
 
-function KjøreTøyListe({ cars }: { cars: Car[] }) {
+function KjøreTøyListe({ vehicles }: { vehicles: vicle[] }) {
   return (
     <div className="">
       <div className="min-h-screen  p-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
-            {cars.map((car) => (
-              <CarCard
-                key={car.id}
-                merke={car.brand}
-                år={car.year}
-                type={car.variant}
-                pris={car.price}
-                {...car}
+            {vehicles.map((vehicle) => (
+              <KjøretøyCard
+                key={vehicle.id}
+                merke={vehicle.brand}
+                år={vehicle.year}
+                type={vehicle.variant}
+                pris={vehicle.price}
+                {...vehicle}
               />
             ))}
           </div>

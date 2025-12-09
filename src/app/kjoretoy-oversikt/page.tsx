@@ -1,14 +1,14 @@
-import { getCars } from "@/actions/GET/getCars";
-import KjøreTøyListe from "@/components/KjøreTøyListe";
-import { MobileFilter } from "@/components/MobileFilter";
-import SideBarBox from "@/components/SideBarBox";
+import { getVehicles } from "@/actions/GET/getVehicles";
+import KjøreTøyListe from "@/components/kjøretøy/KjøreTøyListe";
+import { MobileFilter } from "@/components/filter/MobileFilter";
+import SideBarBox from "@/components/filter/SideBarBox";
 
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 async function KjøretøyOversikt() {
-  const cars = await getCars();
+  const vehicles = await getVehicles();
 
-  console.log("Fetched cars:", cars);
+  console.log("Fetched vehicles:", vehicles);
 
   return (
     <section className="relative min-h-screen">
@@ -16,7 +16,7 @@ async function KjøretøyOversikt() {
         <h1 className="text-2xl font-bold text-center mb-6">
           KJØRETØY OVERSIKT
         </h1>
-        <KjøreTøyListe cars={cars} />
+        <KjøreTøyListe vehicles={vehicles} />
       </div>
 
       <SidebarProvider>

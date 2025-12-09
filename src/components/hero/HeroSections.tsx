@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import KundeReview from "./KundeReview";
+import KundeReview from "../KundeReview";
 
 function HeroSections() {
   const { resolvedTheme } = useTheme();

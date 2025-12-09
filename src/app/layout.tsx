@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Navigation } from "../components/Navigation";
+import { Navigation } from "../components/navigation/Navigation";
 import { ThemeProvider } from "../components/theme-provider";
 import Footer from "@/components/Footer";
 import { Mona_Sans } from "next/font/google";
