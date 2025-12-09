@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Search, ChevronDown } from "lucide-react";
+import { Search } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -61,7 +61,7 @@ export default function MobileFilterSearch() {
             </Select>
           </div>
 
-          {/* Pickup Location */}
+          {/* Pickup Location 
           <div className="space-y-2">
             <label className="text-sm font-medium">LOKASJON</label>
             <Select defaultValue="en">
@@ -74,7 +74,7 @@ export default function MobileFilterSearch() {
                 <SelectItem value="tre">lokasjon 3</SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </div>*/}
 
           {/* Pick Up & Return Date */}
           <div className="space-y-2">

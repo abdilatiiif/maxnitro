@@ -17,8 +17,6 @@ interface VihecleCardProps {
 }
 
 export function KjøretøyCard(vehicle: VihecleCardProps) {
-  console.log(vehicle);
-
   return (
     <Link
       href={`/kjoretoy-oversikt/vehicle/${vehicle.id ?? ""}`}
@@ -45,7 +43,8 @@ export function KjøretøyCard(vehicle: VihecleCardProps) {
             <Image
               src={vehicle.bilde}
               alt={`${vehicle.merke} ${vehicle.model}`}
-              fill
+              width={500}
+              height={600}
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
             />
           ) : (

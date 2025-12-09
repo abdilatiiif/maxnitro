@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import {
@@ -7,10 +9,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import React from "react";
+
+interface FilterState {
+  type: string;
+  merke: string;
+  modell: string;
+}
 
 export default function FilterSearch() {
+  const [formData, setFormData] = React.useState({
+    type: "",
+    merke: "",
+    modell: "",
+  });
+
+  function handleFilterChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    // Logic to handle filter changes can be added here
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+
+  function handleSearch(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+  }
+
   return (
-    <aside className="w-full rounded-2xl shadow-lg p-6 h-fit sticky top-6">
+    <form
+      onSubmit={handleSearch}
+      className="w-full rounded-2xl shadow-lg p-6 h-fit sticky top-6"
+    >
       <div className="mb-6">
         <h2 className="text-2xl font-bold">Finn ditt kjøretøy</h2>
         <p className="text-sm text-gray-500 mt-1">Bruk filtrene for å søke</p>
@@ -22,14 +53,23 @@ export default function FilterSearch() {
           <label className="text-sm font-semibold  uppercase tracking-wide">
             Type
           </label>
-          <Select defaultValue="Alle">
+          <Select defaultValue="all">
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Velg type" />
+              <SelectValue
+                placeholder="Velg type"
+                onChange={handleFilterChange}
+              />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="land">LAND</SelectItem>
-              <SelectItem value="luft">LUFT</SelectItem>
-              <SelectItem value="sjo">SJØ</SelectItem>
+              <SelectItem name="type" value="land">
+                LAND
+              </SelectItem>
+              <SelectItem name="type" value="luft">
+                LUFT
+              </SelectItem>
+              <SelectItem name="type" value="sjo">
+                SJØ
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -71,7 +111,7 @@ export default function FilterSearch() {
           </Select>
         </div>
 
-        {/* Lokasjon */}
+        {/* Lokasjon 
         <div className="space-y-2">
           <label className="text-sm font-semibolduppercase tracking-wide">
             Lokasjon
@@ -86,27 +126,10 @@ export default function FilterSearch() {
               <SelectItem value="tre">Lokasjon 3</SelectItem>
             </SelectContent>
           </Select>
-        </div>
-
-        {/* Kjøp eller Leie */}
-        <div className="space-y-2">
-          <label className="text-sm font-semibolduppercase tracking-wide">
-            Kjøp eller Leie
-          </label>
-          <Select defaultValue="begge">
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Velg alternativ" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="begge">Begge</SelectItem>
-              <SelectItem value="kjop">Kjøp</SelectItem>
-              <SelectItem value="leie">Leie</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        </div>*/}
 
         {/* Search Button */}
-        <Button className="w-full mt-4">
+        <Button type="submit" className="w-full mt-4">
           <Search className="h-4 w-4 mr-2 inline" />
           Søk kjøretøy
         </Button>
@@ -116,6 +139,6 @@ export default function FilterSearch() {
           Nullstill filtre
         </Button>
       </div>
-    </aside>
+    </form>
   );
 }
