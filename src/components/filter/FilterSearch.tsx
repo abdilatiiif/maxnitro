@@ -61,15 +61,9 @@ export default function FilterSearch() {
               />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem name="type" value="land">
-                LAND
-              </SelectItem>
-              <SelectItem name="type" value="luft">
-                LUFT
-              </SelectItem>
-              <SelectItem name="type" value="sjo">
-                SJØ
-              </SelectItem>
+              <SelectItem value="land">LAND</SelectItem>
+              <SelectItem value="luft">LUFT</SelectItem>
+              <SelectItem value="sjo">SJØ</SelectItem>
             </SelectContent>
           </Select>
         </div>
