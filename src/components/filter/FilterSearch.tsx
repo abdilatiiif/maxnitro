@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
+import { getAllBrands } from "@/actions/GET/getAllBrands.ts";
 import {
   Select,
   SelectContent,
@@ -9,33 +10,43 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface FilterState {
-  type: string;
+  kategori: string;
   merke: string;
-  modell: string;
+  type: string;
 }
 
-export default function FilterSearch() {
+export default function FilterSearch({
+  onFilterChange,
+}: {
+  onFilterChange?: (filters: FilterState) => void;
+}) {
   const [formData, setFormData] = React.useState({
-    type: "",
-    merke: "",
-    modell: "",
+    kategori: "alle",
+    merke: "alle",
+    type: "alle",
   });
 
-  function handleFilterChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    // Logic to handle filter changes can be added here
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  function handleFilterChange(newFilters: FilterState) {
+    console.log("🔍 FilterSearch - New filters:", newFilters);
+
+    setFormData(newFilters);
+    onFilterChange?.(newFilters);
   }
 
   function handleSearch(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
   }
+
+  useEffect(() => {
+    async function getBrands() {
+      const brands = await getAllBrands();
+      console.log("Brands fetched in FilterSearch:", brands);
+    }
+    getBrands();
+  }, []);
 
   return (
     <form
@@ -51,19 +62,23 @@ export default function FilterSearch() {
         {/* Type */}
         <div className="space-y-2">
           <label className="text-sm font-semibold  uppercase tracking-wide">
-            Type
+            Kategori
           </label>
-          <Select defaultValue="all">
+          <Select
+            value={formData.kategori}
+            onValueChange={(value) =>
+              handleFilterChange({ ...formData, kategori: value })
+            }
+          >
             <SelectTrigger className="w-full">
-              <SelectValue
-                placeholder="Velg type"
-                onChange={handleFilterChange}
-              />
+              <SelectValue placeholder="Velg kategori" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="land">LAND</SelectItem>
-              <SelectItem value="luft">LUFT</SelectItem>
-              <SelectItem value="sjo">SJØ</SelectItem>
+              <SelectItem value="alle">Alle</SelectItem>
+              <SelectItem value="motorcycle">Motorcycle</SelectItem>
+              <SelectItem value="jetski">Jetski</SelectItem>
+              <SelectItem value="car">Car</SelectItem>
+              <SelectItem value="jet">Jet</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -73,7 +88,12 @@ export default function FilterSearch() {
           <label className="text-sm font-semibold uppercase tracking-wide">
             Merke
           </label>
-          <Select defaultValue="Alle">
+          <Select
+            value={formData.merke}
+            onValueChange={(value) =>
+              handleFilterChange({ ...formData, merke: value })
+            }
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Velg merke" />
             </SelectTrigger>
@@ -92,7 +112,12 @@ export default function FilterSearch() {
           <label className="text-sm font-semibolduppercase tracking-wide">
             Modell
           </label>
-          <Select defaultValue="Alle">
+          <Select
+            value={formData.type}
+            onValueChange={(value) =>
+              handleFilterChange({ ...formData, type: value })
+            }
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Velg modell" />
             </SelectTrigger>
@@ -122,14 +147,18 @@ export default function FilterSearch() {
           </Select>
         </div>*/}
 
-        {/* Search Button */}
-        <Button type="submit" className="w-full mt-4">
-          <Search className="h-4 w-4 mr-2 inline" />
-          Søk kjøretøy
-        </Button>
-
         {/* Reset Button */}
-        <Button className="w-full py-2 text-sm font-medium">
+        <Button
+          type="button"
+          className="w-full py-2 text-sm font-medium"
+          onClick={() =>
+            handleFilterChange({
+              kategori: "alle",
+              merke: "alle",
+              type: "alle",
+            })
+          }
+        >
           Nullstill filtre
         </Button>
       </div>

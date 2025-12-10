@@ -3,17 +3,14 @@ import { KjøretøyCard } from "./KjøretøyCard";
 interface vicle {
   kategori: string;
   id: number;
-  brand: string;
+  merke: string;
   model: string;
-  year: number;
-  variant: string;
-  seller: string;
-  sellerType: string;
-  price: number;
-  imageUrl: string;
-  status: string;
-  statusColor: string;
-  bgColor: string;
+  type: string;
+  år: number;
+  pris: number;
+  bilde: string;
+  lagt_til: string;
+  farge: string;
 }
 
 /*
@@ -69,11 +66,15 @@ function KjøreTøyListe({ vehicles }: { vehicles: vicle[] }) {
             {vehicles.map((vehicle) => (
               <KjøretøyCard
                 key={vehicle.id}
-                merke={vehicle.brand}
-                år={vehicle.year}
-                type={vehicle.variant}
-                pris={vehicle.price}
-                {...vehicle}
+                id={vehicle.id}
+                merke={vehicle.merke}
+                model={vehicle.model}
+                år={vehicle.år}
+                type={vehicle.type}
+                bilde={vehicle.bilde}
+                pris={vehicle.pris}
+                farge={vehicle.farge}
+                kategori={vehicle.kategori}
               />
             ))}
           </div>
