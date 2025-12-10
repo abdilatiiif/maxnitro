@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Navigation } from "../components/Navigation";
+import { Navigation } from "../components/navigation/Navigation";
+import { ThemeProvider } from "../components/theme-provider";
+import Footer from "@/components/Footer";
+import { Mona_Sans } from "next/font/google";
+
+const monaSans = Mona_Sans({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,10 +21,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <Navigation />
-        {children}
+    <html
+      lang="en"
+      className={`${monaSans.className}`}
+      suppressHydrationWarning
+    >
+      <body className="">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navigation />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
