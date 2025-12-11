@@ -1,6 +1,5 @@
 import { Car, CheckCircle, Zap, Gauge } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 
 interface VihecleCardProps {
   merke: string;
@@ -40,7 +39,7 @@ export function KjøretøyCard(vehicle: VihecleCardProps) {
         {/* Image Section */}
         <div className="relative w-full h-56 overflow-hidden bg-linear-to-br from-muted/30 to-muted/10">
           {vehicle.bilde ? (
-            <Image
+            <img
               src={vehicle.bilde}
               alt={`${vehicle.merke} ${vehicle.model}`}
               width={500}

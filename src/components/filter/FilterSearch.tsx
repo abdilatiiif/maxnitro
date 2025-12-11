@@ -1,8 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
-import { getAllBrands } from "@/actions/GET/getAllBrands.ts";
+
+import { getAllCategories } from "@/actions/GET/getAllCategories";
+import { getAllBrands } from "@/actions/GET/getAllBrands";
+import { getAllTypes } from "@/actions/GET/getAllTypes";
 import {
   Select,
   SelectContent,
@@ -10,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface FilterState {
   kategori: string;
@@ -23,15 +25,17 @@ export default function FilterSearch({
 }: {
   onFilterChange?: (filters: FilterState) => void;
 }) {
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState({
     kategori: "alle",
     merke: "alle",
     type: "alle",
   });
 
-  function handleFilterChange(newFilters: FilterState) {
-    console.log("🔍 FilterSearch - New filters:", newFilters);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [brands, setBrands] = useState<string[]>([]);
+  const [types, setTypes] = useState<string[]>([]);
 
+  function handleFilterChange(newFilters: FilterState) {
     setFormData(newFilters);
     onFilterChange?.(newFilters);
   }
@@ -41,12 +45,20 @@ export default function FilterSearch({
   }
 
   useEffect(() => {
-    async function getBrands() {
-      const brands = await getAllBrands();
-      console.log("Brands fetched in FilterSearch:", brands);
+    async function getFilterOptions() {
+      const allCategories = await getAllCategories();
+      const allBrands = await getAllBrands();
+      const allTypes = await getAllTypes();
+
+      setCategories(allCategories);
+      setBrands(allBrands);
+      setTypes(allTypes);
     }
-    getBrands();
+
+    getFilterOptions();
   }, []);
+
+  console.log("Available categories:", categories);
 
   return (
     <form
@@ -75,10 +87,11 @@ export default function FilterSearch({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="alle">Alle</SelectItem>
-              <SelectItem value="motorcycle">Motorcycle</SelectItem>
-              <SelectItem value="jetski">Jetski</SelectItem>
-              <SelectItem value="car">Car</SelectItem>
-              <SelectItem value="jet">Jet</SelectItem>
+              {categories.map((kat) => (
+                <SelectItem key={kat} value={kat}>
+                  {kat}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
@@ -99,10 +112,11 @@ export default function FilterSearch({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="alle">Alle</SelectItem>
-              <SelectItem value="porsche">Porsche</SelectItem>
-              <SelectItem value="bmw">BMW</SelectItem>
-              <SelectItem value="mercedes">Mercedes</SelectItem>
-              <SelectItem value="audi">Audi</SelectItem>
+              {brands.map((brand) => (
+                <SelectItem key={brand} value={brand}>
+                  {brand}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
@@ -119,17 +133,18 @@ export default function FilterSearch({
             }
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Velg modell" />
+              <SelectValue placeholder="Velg Type" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="alle">Alle</SelectItem>
-              <SelectItem value="911">911</SelectItem>
-              <SelectItem value="cayenne">Cayenne</SelectItem>
-              <SelectItem value="panamera">Panamera</SelectItem>
+              {types.map((type) => (
+                <SelectItem key={type} value={type}>
+                  {type}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
-
         {/* Lokasjon 
         <div className="space-y-2">
           <label className="text-sm font-semibolduppercase tracking-wide">

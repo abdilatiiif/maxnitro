@@ -2,19 +2,14 @@
 import supabase from "@/supabase";
 
 export async function getAllBrands() {
-  const { data, error } = await supabase.from("vehicles").select("kategori");
+  const { data, error } = await supabase.from("vehicles").select("merke");
 
   if (error) {
     console.error("Error henting av biler:", error);
     return [];
   }
 
-  console.log("Fetched brands:", data);
-
-  const uniqueBrands = [...new Set(data.map((b) => b.kategori))].filter(
-    Boolean
-  );
-  console.log("Unique brands:", uniqueBrands);
+  const uniqueBrands = [...new Set(data.map((b) => b.merke))].filter(Boolean);
 
   return uniqueBrands;
 }
