@@ -1,6 +1,10 @@
-import { Card, CardContent } from "@/components/ui/card";
+"use client";
+
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
+
+import { getAllCategories } from "@/actions/GET/getAllCategories";
+import { getAllBrands } from "@/actions/GET/getAllBrands";
+import { getAllTypes } from "@/actions/GET/getAllTypes";
 import {
   Select,
   SelectContent,
@@ -8,95 +12,174 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useEffect, useState } from "react";
 
-export default function MobileFilterSearch() {
+interface FilterState {
+  kategori: string;
+  merke: string;
+  type: string;
+}
+
+export default function MobileFilterSearch({
+  onFilterChange,
+}: {
+  onFilterChange?: (filters: FilterState) => void;
+}) {
+  const [formData, setFormData] = useState({
+    kategori: "alle",
+    merke: "alle",
+    type: "alle",
+  });
+
+  const [categories, setCategories] = useState<string[]>([]);
+  const [brands, setBrands] = useState<string[]>([]);
+  const [types, setTypes] = useState<string[]>([]);
+
+  function handleFilterChange(newFilters: FilterState) {
+    console.log("🔍 FilterSearch - New filters:", newFilters);
+
+    setFormData(newFilters);
+    onFilterChange?.(newFilters);
+  }
+
+  function handleSearch(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+  }
+
+  useEffect(() => {
+    async function getFilterOptions() {
+      const allCategories = await getAllCategories();
+      const allBrands = await getAllBrands();
+      const allTypes = await getAllTypes();
+
+      setCategories(allCategories);
+      setBrands(allBrands);
+      setTypes(allTypes);
+    }
+
+    getFilterOptions();
+  }, []);
+
+  console.log("Available categories:", categories);
+
   return (
-    <Card className="w-full max-w-4xl mx-auto shadow-lg overflow-y-auto">
-      <CardContent className="p-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-          {/* Car Brand */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium ">TYPE</label>
-            <Select defaultValue="Alle">
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="porsche">LAND</SelectItem>
-                <SelectItem value="bmw">LUFT</SelectItem>
-                <SelectItem value="mercedes">SJØ</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium ">MERKE</label>
-            <Select defaultValue="Alle">
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select brand" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="porsche">Alle</SelectItem>
-                <SelectItem value="porsche">Porsche</SelectItem>
+    <form
+      onSubmit={handleSearch}
+      className="w-full rounded-2xl shadow-lg p-6 h-fit sticky top-6"
+    >
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold">Finn ditt kjøretøy</h2>
+        <p className="text-sm text-gray-500 mt-1">Bruk filtrene for å søke</p>
+      </div>
 
-                <SelectItem value="bmw">BMW</SelectItem>
-                <SelectItem value="mercedes">Mercedes</SelectItem>
-                <SelectItem value="audi">Audi</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Car Model */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium">MODELL</label>
-            <Select defaultValue="Alle">
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select model" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Alle">Alle</SelectItem>
-                <SelectItem value="911">911</SelectItem>
-                <SelectItem value="cayenne">Cayenne</SelectItem>
-                <SelectItem value="panamera">Panamera</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Pickup Location 
-          <div className="space-y-2">
-            <label className="text-sm font-medium">LOKASJON</label>
-            <Select defaultValue="en">
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select location" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="en">lokasjon 1</SelectItem>
-                <SelectItem value="to">lokasjon 2</SelectItem>
-                <SelectItem value="tre">lokasjon 3</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>*/}
-
-          {/* Pick Up & Return Date */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium ">KJØP ELLER LEIE</label>
-            <Select defaultValue="BEGGE">
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select location" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="KJØP">KJØP</SelectItem>
-                <SelectItem value="LEIE">LEIE</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Search Button */}
-          <Button className="h-12 ">
-            <Search className="h-4 w-4 mr-2" />
-            Search
-          </Button>
+      <div className="flex flex-col gap-6">
+        {/* Type */}
+        <div className="space-y-2">
+          <label className="text-sm font-semibold  uppercase tracking-wide">
+            Kategori
+          </label>
+          <Select
+            value={formData.kategori}
+            onValueChange={(value) =>
+              handleFilterChange({ ...formData, kategori: value })
+            }
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Velg kategori" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="alle">Alle</SelectItem>
+              {categories.map((kat) => (
+                <SelectItem key={kat} value={kat}>
+                  {kat}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
-      </CardContent>
-    </Card>
+
+        {/* Merke */}
+        <div className="space-y-2">
+          <label className="text-sm font-semibold uppercase tracking-wide">
+            Merke
+          </label>
+          <Select
+            value={formData.merke}
+            onValueChange={(value) =>
+              handleFilterChange({ ...formData, merke: value })
+            }
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Velg merke" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="alle">Alle</SelectItem>
+              {brands.map((brand) => (
+                <SelectItem key={brand} value={brand}>
+                  {brand}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Modell */}
+        <div className="space-y-2">
+          <label className="text-sm font-semibolduppercase tracking-wide">
+            Modell
+          </label>
+          <Select
+            value={formData.type}
+            onValueChange={(value) =>
+              handleFilterChange({ ...formData, type: value })
+            }
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Velg type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="alle">Alle</SelectItem>
+              {types.map((type) => (
+                <SelectItem key={type} value={type}>
+                  {type}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Lokasjon 
+        <div className="space-y-2">
+          <label className="text-sm font-semibolduppercase tracking-wide">
+            Lokasjon
+          </label>
+          <Select defaultValue="en">
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Velg lokasjon" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="en">Lokasjon 1</SelectItem>
+              <SelectItem value="to">Lokasjon 2</SelectItem>
+              <SelectItem value="tre">Lokasjon 3</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>*/}
+
+        {/* Reset Button */}
+        <Button
+          type="button"
+          className="w-full py-2 text-sm font-medium"
+          onClick={() =>
+            handleFilterChange({
+              kategori: "alle",
+              merke: "alle",
+              type: "alle",
+            })
+          }
+        >
+          Nullstill filtre
+        </Button>
+      </div>
+    </form>
   );
 }

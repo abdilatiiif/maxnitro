@@ -19,7 +19,7 @@ interface CarDetailPageProps {
   vehicle?: Vehicle | null;
 }
 
-function CarDetailPage({ vehicle }: CarDetailPageProps) {
+function DetailPage({ vehicle }: CarDetailPageProps) {
   if (!vehicle) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -46,12 +46,10 @@ function CarDetailPage({ vehicle }: CarDetailPageProps) {
       {/* Hero Section */}
       <div className="relative h-[60vh] bg-linear-to-br from-muted/30 to-muted/10">
         {vehicle.bilde ? (
-          <Image
+          <img
             src={vehicle.bilde}
             alt={`${vehicle.merke} ${vehicle.model}`}
-            fill
-            className="object-cover"
-            priority
+            className="w-full h-full object-cover object-center"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
@@ -173,4 +171,4 @@ function CarDetailPage({ vehicle }: CarDetailPageProps) {
     </div>
   );
 }
-export default CarDetailPage;
+export default DetailPage;

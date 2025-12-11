@@ -5,7 +5,6 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerHeader,
@@ -14,7 +13,15 @@ import {
 } from "@/components/ui/drawer";
 import MobileFilterSearch from "./MobileFilterSearch";
 
-export function MobileFilter() {
+export function MobileFilter({
+  onFilterChange,
+}: {
+  onFilterChange: (filters: {
+    kategori: string;
+    merke: string;
+    type: string;
+  }) => void;
+}) {
   return (
     <div className="absolute w-full flex items-center justify-center z-50 border-none md:hidden">
       <Drawer>
@@ -47,15 +54,8 @@ export function MobileFilter() {
                 passer dine behov
               </DrawerDescription>
             </DrawerHeader>
-            <DrawerClose asChild>
-              <Button
-                variant="default"
-                className="bg-none bg-red-500 size-2 p-3 border-none rounded-none absolute"
-              >
-                X
-              </Button>
-            </DrawerClose>
-            <MobileFilterSearch />
+
+            <MobileFilterSearch onFilterChange={onFilterChange} />
           </div>
         </DrawerContent>
       </Drawer>

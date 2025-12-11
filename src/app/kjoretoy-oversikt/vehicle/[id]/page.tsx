@@ -1,5 +1,5 @@
 import { getVehicle } from "@/actions/GET/getVehicle";
-import CarDetailPage from "@/components/kjøretøy/CarDetailPage";
+import DetailPage from "@/components/kjøretøy/DetailPage";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -15,6 +15,6 @@ async function Page({ params }: PageProps) {
 
   console.log("Received vehicle:", vehicle);
 
-  return <CarDetailPage vehicle={vehicle} />;
+  return <DetailPage vehicle={vehicle} />;
 }
 export default Page;
