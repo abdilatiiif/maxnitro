@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useTheme } from "next-themes";
 
 function HeroMainSection() {
@@ -65,9 +66,12 @@ function HeroMainSection() {
                 sedans til kraftige sportsbiler. Nyt topp ytelse, avansert
                 teknologi og førsteklasses komfort mens du cruiser i stil.
               </p>
-              <button className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all w-fit">
+              <Link
+                href="/kjoretoy-oversikt?kategori=car"
+                className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all w-fit text-center"
+              >
                 Utforsk Biler
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -87,9 +91,12 @@ function HeroMainSection() {
                 den kresne som setter pris på eksklusivitet og komfort på
                 vannet.
               </p>
-              <button className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all w-fit">
+              <Link
+                href="/kjoretoy-oversikt?kategori=yacht"
+                className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all w-fit text-center"
+              >
                 Utforsk Yachter
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -108,9 +115,12 @@ function HeroMainSection() {
                 Reis i ultimat luksus og komfort med våre privatfly. Maksimal
                 fleksibilitet og førsteklasses service for den kresne reisende.
               </p>
-              <button className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all w-fit">
+              <Link
+                href="/kjoretoy-oversikt?kategori=jet"
+                className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all w-fit text-center"
+              >
                 Utforsk Fly
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -130,9 +140,12 @@ function HeroMainSection() {
                 eksklusive motorsykler tilbyr kraft, stil og uforglemmelige
                 opplevelser.
               </p>
-              <button className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all w-fit">
+              <Link
+                href="/kjoretoy-oversikt?kategori=motorcycle"
+                className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all w-fit text-center"
+              >
                 Utforsk Motorsykler
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -151,9 +164,12 @@ function HeroMainSection() {
                 Føl adrenalinet pumpe med våre kraftige jetskier. Perfekt for de
                 som søker action og moro på vannet i sommervarmen.
               </p>
-              <button className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all w-fit">
+              <Link
+                href="/kjoretoy-oversikt?kategori=jetski"
+                className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all w-fit text-center"
+              >
                 Utforsk Jetski
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -172,9 +188,12 @@ function HeroMainSection() {
                 Ren kjøreglede og ekstrem ytelse. Våre sportsbiler kombinerer
                 legendarisk design med banbrytende teknologi og motorsportarv.
               </p>
-              <button className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all w-fit">
+              <Link
+                href="/kjoretoy-oversikt?kategori=car"
+                className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all w-fit text-center"
+              >
                 Utforsk Sportsbiler
-              </button>
+              </Link>
             </div>
           </div>
         </div>

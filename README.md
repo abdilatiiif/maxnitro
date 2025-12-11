@@ -24,4 +24,6 @@
 
 ############################################################
 
-28.nov : installert supabase, lagret som eget API på siden. Viser nå biler på siden med get actionsever. laget også egen .env.local fil for key & URL
+- when filter inputs changes, change also the url
+- hero page - cta btn -> filter inputs on url changes after click
+-

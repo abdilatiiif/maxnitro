@@ -8,6 +8,7 @@ import KjøreTøyListe from "@/components/kjøretøy/KjøreTøyListe";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 import { useEffect, useState } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 interface Vehicle {
   id: number;
@@ -24,11 +25,16 @@ interface Vehicle {
 }
 
 function KjøretøyOversikt() {
+  // URL Filter Sync
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [filters, setFilters] = useState({
-    kategori: "alle",
-    merke: "alle",
-    type: "alle",
+    kategori: searchParams.get("kategori") || "alle",
+    merke: searchParams.get("merke") || "alle",
+    type: searchParams.get("type") || "alle",
   });
 
   useEffect(() => {
@@ -38,6 +44,21 @@ function KjøretøyOversikt() {
     }
     fetchVehicles();
   }, []);
+
+  // Automatisk URL-sync når filters endres
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    console.log(params);
+    if (filters.kategori !== "alle") params.set("kategori", filters.kategori);
+    if (filters.merke !== "alle") params.set("merke", filters.merke);
+    if (filters.type !== "alle") params.set("type", filters.type);
+
+    const queryString = params.toString();
+    router.replace(queryString ? `${pathname}?${queryString}` : pathname, {
+      scroll: false,
+    });
+  }, [filters, pathname, router]);
 
   const filteredVehicles = vehicles.filter((vehicle) => {
     // 1. Filter på vehicle type (motorcycle, car, jetski, etc.)
@@ -80,24 +101,12 @@ function KjøretøyOversikt() {
 
       <SidebarProvider>
         <div className="w-full hidden md:flex">
-          <SideBarBox
-            onFilterChange={(filters: unknown) =>
-              setFilters(
-                filters as { kategori: string; merke: string; type: string }
-              )
-            }
-          />
+          <SideBarBox onFilterChange={setFilters} />
           <main className="flex-1"></main>
         </div>
       </SidebarProvider>
 
-      <MobileFilter
-        onFilterChange={(filters: {
-          kategori: string;
-          merke: string;
-          type: string;
-        }) => setFilters(filters)}
-      />
+      <MobileFilter onFilterChange={setFilters} />
     </section>
   );
 }
