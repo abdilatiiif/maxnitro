@@ -49,7 +49,6 @@ function KjøretøyOversikt() {
   useEffect(() => {
     const params = new URLSearchParams();
 
-    console.log(params);
     if (filters.kategori !== "alle") params.set("kategori", filters.kategori);
     if (filters.merke !== "alle") params.set("merke", filters.merke);
     if (filters.type !== "alle") params.set("type", filters.type);
@@ -90,6 +89,10 @@ function KjøretøyOversikt() {
     return true;
   });
 
+  const handleFilterChange = (filters: unknown) => {
+    setFilters(filters as { kategori: string; merke: string; type: string; });
+  };
+
   return (
     <section className="relative min-h-screen">
       <div className="container mx-auto px-6 relative z-10">
@@ -101,12 +104,12 @@ function KjøretøyOversikt() {
 
       <SidebarProvider>
         <div className="w-full hidden md:flex">
-          <SideBarBox onFilterChange={setFilters} />
+          <SideBarBox onFilterChange={handleFilterChange} />
           <main className="flex-1"></main>
         </div>
       </SidebarProvider>
 
-      <MobileFilter onFilterChange={setFilters} />
+      <MobileFilter onFilterChange={handleFilterChange} />
     </section>
   );
 }

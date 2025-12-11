@@ -12,7 +12,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Input } from "../ui/input";
-import { Car, Flame, Plane, Sailboat } from "lucide-react";
+import { Car, Flame, Plane, Sailboat, Droplet } from "lucide-react";
 
 export function NavigationDesktop() {
   return (
@@ -95,7 +95,7 @@ export function NavigationDesktop() {
                   </Link>
                 </NavigationMenuLink>
                 <NavigationMenuLink asChild>
-                  <Link href="#">
+                  <Link href="/kjoretoy-oversikt?kategori=car">
                     <div className="font-medium flex items-center gap-2">
                       Bil <Car />{" "}
                     </div>
@@ -106,7 +106,7 @@ export function NavigationDesktop() {
                   </Link>
                 </NavigationMenuLink>
                 <NavigationMenuLink asChild>
-                  <Link href="#">
+                  <Link href="/kjoretoy-oversikt?kategori=yacht">
                     <div className="font-medium flex items-center gap-2">
                       Båt <Sailboat />{" "}
                     </div>
@@ -117,7 +117,7 @@ export function NavigationDesktop() {
                   </Link>
                 </NavigationMenuLink>
                 <NavigationMenuLink asChild>
-                  <Link href="#">
+                  <Link href="/kjoretoy-oversikt?kategori=jet">
                     <div className="font-medium flex items-center gap-2">
                       Fly <Plane />{" "}
                     </div>
@@ -128,9 +128,19 @@ export function NavigationDesktop() {
                   </Link>
                 </NavigationMenuLink>
                 <NavigationMenuLink asChild>
-                  <Link href="#">
+                  <Link href="/kjoretoy-oversikt?kategori=motorcycle">
                     <div className="font-medium flex items-center gap-2">
                       Liten men Hurtig <Flame />{" "}
+                    </div>
+                    <div className="text-muted-foreground">
+                      Oppdag vårt utvalg av lette og raske kjøretøy
+                    </div>
+                  </Link>
+                </NavigationMenuLink>
+                <NavigationMenuLink asChild>
+                  <Link href="/kjoretoy-oversikt?kategori=jetski">
+                    <div className="font-medium flex items-center gap-2">
+                      Water mini <Droplet />{" "}
                     </div>
                     <div className="text-muted-foreground">
                       Oppdag vårt utvalg av lette og raske kjøretøy

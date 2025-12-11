@@ -26,4 +26,5 @@
 
 - when filter inputs changes, change also the url
 - hero page - cta btn -> filter inputs on url changes after click
+
 -
