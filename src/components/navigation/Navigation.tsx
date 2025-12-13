@@ -1,5 +1,6 @@
+"use client";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Menu, User } from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -18,8 +19,32 @@ import { NavigationDesktop } from "./NavigationDesktop";
 import { DarkMode } from "../DarkMode";
 import { MobileNavLinks } from "./MobileNavLinks";
 import { Input } from "../ui/input";
+import { useEffect, useState } from "react";
+import { getUser } from "@/actions/AUTH/getUser";
+
+type User = {
+  // Add your User type properties here based on what getUser returns
+  id: string;
+  name?: string;
+  email?: string;
+  // Add other properties as needed
+};
 
 export function Navigation() {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    async function fetchUser() {
+      const currentUser = await getUser();
+      setUser(currentUser);
+
+      console.log("Bruker eksisterer NAV:", currentUser);
+    }
+    fetchUser();
+  }, []); // Empty dependency - only run once on mount
+
+  console.log(user);
+
   return (
     <div className="flex flex-row items-center justify-between h-20 ">
       {/** desktop  */}
@@ -42,7 +67,18 @@ export function Navigation() {
 
       <div className="z-10 hidden md:flex items-center gap-2 pr-4">
         <DarkMode />
-        <Button>Login</Button>
+
+        {user ? (
+          <Button>
+            <Link href="/dashboard/oversikt">
+              <User />
+            </Link>
+          </Button>
+        ) : (
+          <Button>
+            <Link href="/auth/login">Logg inn</Link>
+          </Button>
+        )}
       </div>
 
       <Sheet>

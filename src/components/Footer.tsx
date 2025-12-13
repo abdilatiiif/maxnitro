@@ -1,10 +1,35 @@
-import Image from "next/image";
+"use client";
 
-import logo from "@/assets/logo.png";
+import { Button } from "./ui/button";
+import { useEffect, useState } from "react";
+import { getUser } from "@/actions/AUTH/getUser";
+import { User } from "@supabase/supabase-js";
+import { logoutUser } from "@/actions/AUTH/logout";
+// Adjust import path as needed
 
 function Footer() {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    async function fetchUser() {
+      const currentUser = await getUser();
+      setUser(currentUser);
+
+      console.log("Bruker eksisterer FOOTER:", currentUser);
+    }
+    fetchUser();
+  }, []); // Empty dependency - only run once on mount
+
   return (
     <footer className="relative max-w-7xl mx-auto p-10 border-t-4 border-amber-200 mt-10">
+      {user && (
+        <Button
+          onClick={() => logoutUser()}
+          className="fixed z-50 bottom-5 right-5"
+        >
+          Logg ut
+        </Button>
+      )}
       <div className="pt-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
           <div>
