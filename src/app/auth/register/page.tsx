@@ -11,8 +11,59 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { ChangeEvent, useEffect, useState } from "react";
+import { getUser } from "@/actions/AUTH/getUser";
+import { createAccount } from "@/actions/AUTH/createAccount";
 
 function RegisterPage() {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    termsAccepted: false,
+  });
+
+  useEffect(() => {
+    async function checkSession() {
+      const session = await getUser();
+      if (session) {
+        // Brukeren er allerede logget inn, omdiriger til dashboard eller annen side
+        console.log("Bruker er allerede logget inn:", session);
+      }
+    }
+    checkSession();
+  }, []);
+
+  const handleSubmit = async function (e: ChangeEvent<HTMLFormElement>) {
+    e.preventDefault();
+    console.log("Form Data:", formData);
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passordene stemmer ikke overens.");
+      return;
+    }
+
+    if (!formData.termsAccepted) {
+      alert("Du må godta vilkårene for å registrere deg.");
+      return;
+    }
+
+    const result = await createAccount({
+      fullName: formData.fullName,
+      email: formData.email,
+      password: formData.password,
+    });
+
+    if (result.success) {
+      console.log("✅ Konto opprettet!", result.data);
+      window.location.href = "/auth/login";
+    } else {
+      console.error("❌ Konto opprettelse feilet:", result.error);
+      alert("Konto opprettelse feilet: " + result.error);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
@@ -25,15 +76,19 @@ function RegisterPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name Field */}
             <div className="space-y-2">
-              <Label htmlFor="name">Fullt navn</Label>
+              <Label htmlFor="fullName">Fullt navn</Label>
               <Input
-                id="name"
+                id="fullName"
                 type="text"
                 placeholder="Ola Nordmann"
                 required
+                value={formData.fullName}
+                onChange={(e) =>
+                  setFormData({ ...formData, fullName: e.target.value })
+                }
               />
             </div>
 
@@ -45,6 +100,10 @@ function RegisterPage() {
                 type="email"
                 placeholder="navn@eksempel.no"
                 required
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
               />
             </div>
 
@@ -56,6 +115,10 @@ function RegisterPage() {
                 type="password"
                 placeholder="Minimum 8 tegn"
                 required
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
               />
             </div>
 
@@ -67,6 +130,10 @@ function RegisterPage() {
                 type="password"
                 placeholder="Skriv inn passord på nytt"
                 required
+                value={formData.confirmPassword}
+                onChange={(e) =>
+                  setFormData({ ...formData, confirmPassword: e.target.value })
+                }
               />
             </div>
 
@@ -77,6 +144,10 @@ function RegisterPage() {
                 id="terms"
                 className="w-4 h-4 rounded border-gray-300"
                 required
+                checked={formData.termsAccepted}
+                onChange={(e) =>
+                  setFormData({ ...formData, termsAccepted: e.target.checked })
+                }
               />
               <label htmlFor="terms" className="text-sm text-muted-foreground">
                 Jeg godtar{" "}

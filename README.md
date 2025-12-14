@@ -28,4 +28,6 @@
 - hero page - cta btn -> filter inputs on url changes after click
 
 - auth . login & register page
--
+- auth login works
+- auth create an account, add user to database
+- view dashboard

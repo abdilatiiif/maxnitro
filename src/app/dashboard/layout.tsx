@@ -12,6 +12,8 @@ export default async function DashboardLayout({
     redirect("/auth/login");
   }
 
+  console.log(user);
+
   return (
     <div className="min-h-screen">
       <nav className="shadow-sm">
@@ -21,7 +23,9 @@ export default async function DashboardLayout({
               <h1 className="text-xl font-bold text-red-500">MaxNitro</h1>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-700">{user.email}</span>
+              <span className="text-sm text-gray-700">
+                {user.user_metadata.full_name}
+              </span>
               <div className="w-8 h-8 bg-red-500 rounded-full"></div>
             </div>
           </div>
