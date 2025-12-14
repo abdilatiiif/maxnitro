@@ -70,7 +70,7 @@ export function Navigation() {
 
         {user ? (
           <Button>
-            <Link href="/dashboard/oversikt">
+            <Link href="/dashboard">
               <User />
             </Link>
           </Button>
@@ -92,6 +92,17 @@ export function Navigation() {
           </SheetHeader>
 
           <nav className="flex items-center justify-center flex-col p-2">
+            {user ? (
+              <Button>
+                <Link href="/dashboard" className="flex">
+                  <User /> Profil
+                </Link>
+              </Button>
+            ) : (
+              <Button>
+                <Link href="/auth/login">Logg inn</Link>
+              </Button>
+            )}
             <MobileNavLinks />
             <Input
               placeholder="Søk etter kjøretøy..."
@@ -100,6 +111,7 @@ export function Navigation() {
           </nav>
           <SheetFooter>
             <DarkMode />
+
             <SheetClose asChild>
               <Button variant="outline">Close</Button>
             </SheetClose>
