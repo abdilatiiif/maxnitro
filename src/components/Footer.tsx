@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getUser } from "@/actions/AUTH/getUser";
 import { User } from "@supabase/supabase-js";
 import { logoutUser } from "@/actions/AUTH/logout";
+
 // Adjust import path as needed
 
 function Footer() {
@@ -24,7 +25,10 @@ function Footer() {
     <footer className="relative max-w-7xl mx-auto p-10 border-t-4 border-amber-200 mt-10">
       {user && (
         <Button
-          onClick={() => logoutUser()}
+          onClick={() => {
+            logoutUser();
+            window.location.href = "/";
+          }}
           className="fixed z-50 bottom-5 right-5"
         >
           Logg ut

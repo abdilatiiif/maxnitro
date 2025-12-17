@@ -14,6 +14,7 @@ import Link from "next/link";
 import { ChangeEvent, useEffect, useState } from "react";
 import { getUser } from "@/actions/AUTH/getUser";
 import { createAccount } from "@/actions/AUTH/createAccount";
+import { addUser } from "@/actions/POST/addUser";
 
 function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -57,6 +58,12 @@ function RegisterPage() {
 
     if (result.success) {
       console.log("✅ Konto opprettet!", result.data);
+
+      await addUser({
+        fullName: formData.fullName,
+        email: formData.email,
+      });
+
       window.location.href = "/auth/login";
     } else {
       console.error("❌ Konto opprettelse feilet:", result.error);

@@ -93,7 +93,7 @@ export function Navigation() {
 
           <nav className="flex items-center justify-center flex-col p-2">
             {user ? (
-              <Button>
+              <Button className="w-full px-4">
                 <Link href="/dashboard" className="flex">
                   <User /> Profil
                 </Link>

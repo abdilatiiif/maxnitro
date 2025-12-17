@@ -2,24 +2,17 @@
 
 import supabase from "@/supabase";
 
-async function createAccount({
+async function addUser({
   fullName,
   email,
-  password,
 }: {
   fullName: string;
   email: string;
-  password: string;
 }) {
-  const { data, error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.from("kunder").insert({
+    fullname: fullName,
     email,
-    password,
-    options: {
-      data: {
-        full_name: fullName,
-        role: "user",
-      },
-    },
+    role: "user",
   });
 
   if (error) {
@@ -31,4 +24,4 @@ async function createAccount({
   return { success: true, data };
 }
 
-export { createAccount };
+export { addUser };

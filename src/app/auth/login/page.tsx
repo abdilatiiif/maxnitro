@@ -37,7 +37,7 @@ function LoginPage() {
       console.log("✅ Login successful!", result.data);
 
       // TODO: Redirect til dashboard
-      window.location.href = "/";
+      window.location.href = "/dashboard";
     } else {
       console.error("❌ Login failed:", result.error);
       setError(result.error || "Login feilet");

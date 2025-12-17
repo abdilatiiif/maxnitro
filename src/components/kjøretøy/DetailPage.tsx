@@ -1,6 +1,6 @@
-import Image from "next/image";
-import { Car, Calendar, Tag, Gauge, ArrowLeft } from "lucide-react";
+import { Car, Calendar, Tag, Gauge, ArrowLeft, Heart } from "lucide-react";
 import Link from "next/link";
+import { Button } from "../ui/button";
 
 interface Vehicle {
   id?: number;
@@ -98,6 +98,10 @@ function DetailPage({ vehicle }: CarDetailPageProps) {
                 <p className="text-sm text-muted-foreground">Type</p>
                 <p className="text-lg font-bold">{vehicle.type}</p>
               </div>
+              <Button className="p-6 w-full text-black hover:bg-red-400 cursor-pointer">
+                <Heart className="w-6 h-6  mb-2 " />
+                <p className="text-sm">Legg til favoritter</p>
+              </Button>
 
               {vehicle.kjørelengde && (
                 <div className="p-6 rounded-2xl bg-linear-to-br from-white/5 to-white/2 backdrop-blur-xl border border-white/10">
