@@ -1,7 +1,7 @@
 "use server";
 import supabase from "@/supabase";
 
-export async function getVehicle(id: number) {
+export async function getVehicle(id: string) {
   const { data, error } = await supabase
     .from("vehicles")
     .select("*")

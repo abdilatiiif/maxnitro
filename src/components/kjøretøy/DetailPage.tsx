@@ -1,3 +1,5 @@
+"use client";
+
 import { Car, Calendar, Tag, Gauge, ArrowLeft, Heart } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -144,10 +146,18 @@ function DetailPage({ vehicle }: CarDetailPageProps) {
               </div>
 
               <div className="space-y-3">
-                <button className="w-full px-6 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all">
-                  Bestill nå
-                </button>
-                <button className="w-full px-6 py-4 border-2 border-primary/30 rounded-xl font-semibold hover:bg-primary/10 transition-all">
+                <Link href={`/kjoretoy-oversikt/vehicle/${vehicle.id}/buy`}>
+                  <button
+                    onClick={() => {
+                      // Handle buy with vehicle data
+                      console.log("buy vehicle:", vehicle);
+                    }}
+                    className="cursor-pointer w-full px-6 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all"
+                  >
+                    Bestill nå
+                  </button>
+                </Link>
+                <button className="cursor-pointer w-full px-6 py-4 border-2 border-primary/30 rounded-xl font-semibold hover:bg-primary/10 transition-all">
                   Kontakt oss
                 </button>
               </div>
