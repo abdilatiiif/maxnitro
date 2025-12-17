@@ -1,15 +1,15 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import { getVehicle } from "@/actions/GET/getVehicle";
+import { getUser } from "@/actions/AUTH/getUser";
+import Link from "next/link";
+import KjøretøyKjøpeForm from "@/components/kjøretøy/KjøretøyKjøpeForm";
 
 async function page({ params }: { params: { id: string } }) {
   const { id } = await params;
-  console.log("Vehicle data buy page:", params.id);
 
   const vehicle = await getVehicle(id);
-  console.log("Fetched vehicle data:", vehicle);
+
   if (!vehicle) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -18,9 +18,11 @@ async function page({ params }: { params: { id: string } }) {
     );
   }
 
+  const user = await getUser();
+
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4">
+    <div className="min-h-screen  py-8">
+      <div className="max-w-6xl mx-auto px-4">
         {/* Vehicle Summary */}
         <Card className="mb-8">
           <CardHeader>
@@ -31,36 +33,36 @@ async function page({ params }: { params: { id: string } }) {
               <div>
                 <img
                   src={vehicle.bilde || "/placeholder.jpg"}
-                  alt={vehicle.name}
+                  alt={vehicle.model}
                   className="w-full h-64 object-cover rounded-lg"
                 />
               </div>
               <div className="space-y-4">
                 <div>
-                  <h3 className="text-xl font-semibold">{vehicle.name}</h3>
-                  <p className="text-gray-600">{vehicle.description}</p>
+                  <h3 className="text-xl font-semibold">{vehicle.model}</h3>
+                  <p className="">{vehicle.description}</p>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-gray-500">Årsmodell</p>
+                    <p className="text-sm ">Årsmodell</p>
                     <p className="font-medium">{vehicle.år}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Drivstoff</p>
-                    <p className="font-medium">Diseal / Bensin</p>
+                    <p className="text-sm ">Drivstoff</p>
+                    <p className="font-medium">Diesel / Bensin</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Kilometerstand</p>
-                    <p className="font-medium">{vehicle.mileage} km</p>
+                    <p className="text-sm ">Type Bil</p>
+                    <p className="font-medium">{vehicle.type}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Transmisjon</p>
-                    <p className="font-medium">{vehicle.transmission}</p>
+                    <p className="text-sm ">Transmisjon</p>
+                    <p className="font-medium">Automat</p>
                   </div>
                 </div>
                 <div className="border-t pt-4">
                   <p className="text-3xl font-bold text-red-600">
-                    {vehicle.price?.toLocaleString()} kr
+                    {vehicle.pris?.toLocaleString()} kr
                   </p>
                 </div>
               </div>
@@ -69,175 +71,133 @@ async function page({ params }: { params: { id: string } }) {
         </Card>
 
         {/* Purchase Form */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Buyer Information */}
-          <div className="lg:col-span-2">
-            <Card>
+        {user && user.email ? (
+          <KjøretøyKjøpeForm
+            vehicle={vehicle}
+            user={
+              user as { email: string; user_metadata?: { full_name?: string } }
+            }
+          />
+        ) : (
+          <div className="max-w-md mx-auto">
+            <Card className="text-center">
               <CardHeader>
-                <CardTitle>Kjøperinformasjon</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="firstName">Fornavn</Label>
-                    <Input id="firstName" placeholder="Ola" />
-                  </div>
-                  <div>
-                    <Label htmlFor="lastName">Etternavn</Label>
-                    <Input id="lastName" placeholder="Nordmann" />
-                  </div>
-                </div>
-
-                <div>
-                  <Label htmlFor="email">E-post</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="ola@example.com"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="phone">Telefon</Label>
-                  <Input id="phone" placeholder="+47 123 45 678" />
-                </div>
-
-                <div>
-                  <Label htmlFor="address">Adresse</Label>
-                  <Input id="address" placeholder="Gateadresse 123" />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="postalCode">Postnummer</Label>
-                    <Input id="postalCode" placeholder="0123" />
-                  </div>
-                  <div>
-                    <Label htmlFor="city">Poststed</Label>
-                    <Input id="city" placeholder="Oslo" />
-                  </div>
-                </div>
-
-                {/* Financing Options */}
-                <div className="border-t pt-6">
-                  <h3 className="text-lg font-semibold mb-4">
-                    Finansieringsalternativer
-                  </h3>
-                  <div className="space-y-3">
-                    <label className="flex items-center space-x-3">
-                      <input
-                        type="radio"
-                        name="financing"
-                        value="cash"
-                        className="text-red-600"
-                      />
-                      <span>Kontant betaling</span>
-                    </label>
-                    <label className="flex items-center space-x-3">
-                      <input
-                        type="radio"
-                        name="financing"
-                        value="loan"
-                        className="text-red-600"
-                      />
-                      <span>Billån</span>
-                    </label>
-                    <label className="flex items-center space-x-3">
-                      <input
-                        type="radio"
-                        name="financing"
-                        value="lease"
-                        className="text-red-600"
-                      />
-                      <span>Leasing</span>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Additional Services */}
-                <div className="border-t pt-6">
-                  <h3 className="text-lg font-semibold mb-4">
-                    Tilleggstjenester
-                  </h3>
-                  <div className="space-y-3">
-                    <label className="flex items-center space-x-3">
-                      <input type="checkbox" className="text-red-600" />
-                      <span>Utvidet garanti (+15,000 kr)</span>
-                    </label>
-                    <label className="flex items-center space-x-3">
-                      <input type="checkbox" className="text-red-600" />
-                      <span>Forsikring (+8,000 kr/år)</span>
-                    </label>
-                    <label className="flex items-center space-x-3">
-                      <input type="checkbox" className="text-red-600" />
-                      <span>Levering til hjemmeadresse (+5,000 kr)</span>
-                    </label>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Order Summary */}
-          <div>
-            <Card className="sticky top-4">
-              <CardHeader>
-                <CardTitle>Ordresammendrag</CardTitle>
+                <CardTitle className="text-2xl">Logg inn for å kjøpe</CardTitle>
+                <p className=" mt-2">
+                  Du må være logget inn for å fullføre kjøpet av {vehicle.model}
+                </p>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex justify-between">
-                  <span>Kjøretøy</span>
-                  <span>{vehicle.price?.toLocaleString()} kr</span>
+                <div className="space-y-3">
+                  <Link
+                    href="/auth/register"
+                    className="block w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200"
+                  >
+                    Opprett ny konto
+                  </Link>
+
+                  <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-gray-300" />
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="px-2  ">eller</span>
+                    </div>
+                  </div>
+
+                  <Link
+                    href="/auth/login"
+                    className="block w-full border bg-green-600 font-medium py-3 px-4 rounded-lg transition-colors duration-200"
+                  >
+                    Logg inn med eksisterende konto
+                  </Link>
                 </div>
 
-                <div className="flex justify-between text-sm text-gray-600">
-                  <span>Utvidet garanti</span>
-                  <span>+0 kr</span>
-                </div>
-
-                <div className="flex justify-between text-sm text-gray-600">
-                  <span>Forsikring (1 år)</span>
-                  <span>+0 kr</span>
-                </div>
-
-                <div className="flex justify-between text-sm text-gray-600">
-                  <span>Levering</span>
-                  <span>+0 kr</span>
-                </div>
-
-                <div className="flex justify-between text-sm text-gray-600">
-                  <span>Registreringsavgift</span>
-                  <span>+2,500 kr</span>
-                </div>
-
-                <hr />
-
-                <div className="flex justify-between font-bold text-lg">
-                  <span>Total</span>
-                  <span>{(vehicle.price + 2500)?.toLocaleString()} kr</span>
-                </div>
-
-                <div className="space-y-3 pt-4">
-                  <Button className="w-full bg-red-600 hover:bg-red-700">
-                    Fullfør kjøp
-                  </Button>
-                  <Button variant="outline" className="w-full">
-                    Be om finansiering
-                  </Button>
-                  <Button variant="ghost" className="w-full text-sm">
-                    Lagre og fortsett senere
-                  </Button>
-                </div>
-
-                <div className="text-xs text-gray-500 pt-4">
-                  <p>✓ 14 dagers returrett</p>
-                  <p>✓ 1 års garanti inkludert</p>
-                  <p>✓ Gratis EU-kontroll ved levering</p>
+                <div className="pt-4 border-t border-gray-100">
+                  <div className="flex items-center justify-center space-x-6 text-sm ">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-green-100 rounded-full flex items-center justify-center">
+                        <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+                      </div>
+                      <span>Sikker betaling</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center">
+                        <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                      </div>
+                      <span>14 dagers retur</span>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
+
+            {/* Quick Benefits */}
+            <div className="mt-6 text-center">
+              <p className="text-sm font-medium  mb-3">
+                Hvorfor registrere seg?
+              </p>
+              <div className="grid grid-cols-2 gap-4 text-sm ">
+                <div className="flex items-center space-x-2">
+                  <svg
+                    className="w-4 h-4 text-green-600"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span>Rask checkout</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <svg
+                    className="w-4 h-4 text-green-600"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span>Spor bestillinger</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <svg
+                    className="w-4 h-4 text-green-600"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span>Lagre favoritter</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <svg
+                    className="w-4 h-4 text-green-600"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span>Eksklusiv tilbud</span>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

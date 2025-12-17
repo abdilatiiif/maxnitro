@@ -145,7 +145,7 @@ function DetailPage({ vehicle }: CarDetailPageProps) {
                 <p className="text-sm text-muted-foreground mt-1">NOK / dag</p>
               </div>
 
-              <div className="space-y-3">
+              <div>
                 <Link href={`/kjoretoy-oversikt/vehicle/${vehicle.id}/buy`}>
                   <button
                     onClick={() => {
@@ -157,7 +157,7 @@ function DetailPage({ vehicle }: CarDetailPageProps) {
                     Bestill nå
                   </button>
                 </Link>
-                <button className="cursor-pointer w-full px-6 py-4 border-2 border-primary/30 rounded-xl font-semibold hover:bg-primary/10 transition-all">
+                <button className="mt-4 cursor-pointer w-full px-6 py-4 border-2 border-primary/30 rounded-xl font-semibold hover:bg-primary/10 transition-all">
                   Kontakt oss
                 </button>
               </div>
