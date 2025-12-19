@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { addBuy } from "@/actions/POST/buyVehicle";
 
 interface KjøretøyKjøpeFormProps {
   vehicle: {
@@ -12,6 +13,7 @@ interface KjøretøyKjøpeFormProps {
     pris?: number;
   };
   user: {
+    id: string;
     email: string;
     user_metadata?: {
       full_name?: string;
@@ -20,7 +22,7 @@ interface KjøretøyKjøpeFormProps {
 }
 
 function KjøretøyKjøpeForm({ vehicle, user }: KjøretøyKjøpeFormProps) {
-  console.log("KjøretøyKjøpeForm user prop:", user);
+  console.log("KjøretøyKjøpeForm user prop:", user?.id);
   // Legg til state for å håndtere checkboxes
   const [tilleggstjenester, setTilleggstjenester] = useState({
     utvidetGaranti: false,
@@ -40,14 +42,15 @@ function KjøretøyKjøpeForm({ vehicle, user }: KjøretøyKjøpeFormProps) {
     leveringPris +
     registreringsavgift;
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
     const data = {
+      id: user?.id,
       fullName: user?.user_metadata?.full_name,
       email: user?.email,
       phone: formData.get("phone"),
-      produktet: vehicle,
+      produktet: JSON.stringify(vehicle),
       adresse: formData.get("adresse"),
       postkode: formData.get("postkode"),
       finansiering: formData.get("finansiering"),
@@ -55,7 +58,36 @@ function KjøretøyKjøpeForm({ vehicle, user }: KjøretøyKjøpeFormProps) {
       pris: totalPris,
     };
 
+    // VALIDERING
+    const phone = formData.get("phone");
+    const adresse = formData.get("adresse");
+    const postkode = formData.get("postkode");
+    const finansiering = formData.get("finansiering");
+
+    if (!phone || !adresse || !postkode) {
+      alert(
+        "Vennligst fyll ut alle obligatoriske felter (telefon, adresse, postnummer)"
+      );
+      return;
+    }
+
+    if (!finansiering) {
+      alert("Vennligst velg en finansieringsmetode");
+      return;
+    }
+
     console.log("Form submitted with data:", data);
+    try {
+      const result = await addBuy(data);
+      if (result.success) {
+        alert("Kjøpet var vellykket!");
+      } else {
+        alert("Noe gikk galt: " + result.error);
+      }
+    } catch (error) {
+      console.error("Feil ved innsending av skjema:", error);
+      alert("En feil oppstod under kjøpet. Vennligst prøv igjen senere.");
+    }
   };
 
   const handleCheckboxChange = (service: string, checked: boolean) => {
@@ -90,6 +122,7 @@ function KjøretøyKjøpeForm({ vehicle, user }: KjøretøyKjøpeFormProps) {
                   name="fullName" // Legg til name
                   placeholder="Ola Nordmann"
                   defaultValue={user?.user_metadata?.full_name || ""}
+                  required
                 />
               </div>
             </div>
@@ -102,12 +135,18 @@ function KjøretøyKjøpeForm({ vehicle, user }: KjøretøyKjøpeFormProps) {
                 type="email"
                 placeholder="ola@example.com"
                 defaultValue={user?.email || ""}
+                required
               />
             </div>
 
             <div>
               <Label htmlFor="phone">Telefon</Label>
-              <Input id="phone" name="phone" placeholder="+47 123 45 678" />
+              <Input
+                id="phone"
+                name="phone"
+                placeholder="+47 123 45 678"
+                required
+              />
             </div>
 
             <div>
@@ -116,17 +155,28 @@ function KjøretøyKjøpeForm({ vehicle, user }: KjøretøyKjøpeFormProps) {
                 id="adresse"
                 name="adresse"
                 placeholder="Gateadresse 123"
+                required
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="postkode">Postnummer</Label>
-                <Input id="postkode" name="postkode" placeholder="0123" />
+                <Input
+                  id="postkode"
+                  name="postkode"
+                  placeholder="0123"
+                  required
+                />
               </div>
               <div>
                 <Label htmlFor="poststed">Poststed</Label>
-                <Input id="poststed" name="poststed" placeholder="Oslo" />
+                <Input
+                  id="poststed"
+                  name="poststed"
+                  placeholder="Oslo"
+                  required
+                />
               </div>
             </div>
 
@@ -142,6 +192,7 @@ function KjøretøyKjøpeForm({ vehicle, user }: KjøretøyKjøpeFormProps) {
                     name="finansiering"
                     value="cash"
                     className="text-red-600"
+                    required
                   />
                   <span>Kontant betaling</span>
                 </label>

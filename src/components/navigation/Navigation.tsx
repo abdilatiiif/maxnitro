@@ -37,13 +37,9 @@ export function Navigation() {
     async function fetchUser() {
       const currentUser = await getUser();
       setUser(currentUser);
-
-      console.log("Bruker eksisterer NAV:", currentUser);
     }
     fetchUser();
   }, []); // Empty dependency - only run once on mount
-
-  console.log(user);
 
   return (
     <div className="flex flex-row items-center justify-between h-20 ">

@@ -15,8 +15,6 @@ function Footer() {
     async function fetchUser() {
       const currentUser = await getUser();
       setUser(currentUser);
-
-      console.log("Bruker eksisterer FOOTER:", currentUser);
     }
     fetchUser();
   }, []); // Empty dependency - only run once on mount

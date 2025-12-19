@@ -75,7 +75,11 @@ async function page({ params }: { params: { id: string } }) {
           <KjøretøyKjøpeForm
             vehicle={vehicle}
             user={
-              user as { email: string; user_metadata?: { full_name?: string } }
+              user as {
+                id: string;
+                email: string;
+                user_metadata?: { full_name?: string };
+              }
             }
           />
         ) : (
